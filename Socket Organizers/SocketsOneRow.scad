@@ -1,4 +1,4 @@
-$fn = 30;
+$fn = 300;
 //
 // Single row of sockets
 //
@@ -10,6 +10,7 @@ OD_mm = [ 0.649, 0.658, 0.655, 0.678, 0.723, 0.775, 0.812, 0.862, 0.926, 0.952, 
 PinD_mm = [ 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375 ] * 25.4;
 
 // Parameters (mm)
+Shrinkage = 1.05;   // Adjust for 5% shrinkage in X/Y
 Oversize = 0.4;     // Extra hole size
 Sidewall = 2;       // Edge of hole to side
 Gap = 0.1;          // Extra space between sockets
@@ -26,7 +27,7 @@ function location(n,loc=0) =
             OD_mm[n-2]/2 + Oversize + Gap + Oversize + OD_mm[n-1]/2;
 
 // 
-union() {
+scale([Shrinkage,Shrinkage,1.00]) {
     difference() {
         // Body
         union() {

@@ -3,21 +3,28 @@ $fn = 300;
 // Single row of sockets
 //
 
-// Socket OD's (measured in inches)
-
-// Craftsman 11 piece metric 3/8" drive
-OD_mm = [ 0.649, 0.658, 0.655, 0.678, 0.723, 0.775, 0.812, 0.862, 0.926, 0.952, 1.004 ] * 25.4;
-PinD_mm = [ 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375 ] * 25.4;
-
 // Parameters (mm)
 Shrinkage = 1.03;           // Adjust for 3% shrinkage in X/Y
 Oversize = 0.4;             // Extra hole size
 Sidewall = 2;               // Edge of hole to side
 Gap = 0.1;                  // Extra space between sockets
 Base = 2.5;                 // Base thickness
-Depth = max(PinD_mm) * 0.70;// Depth of pockets
 Wedge = 6;                  // Outer edge to start of wedge
 Chamfer = 1;                // Chamfer on tops of pins
+DepthPCT = 0.70;            // Pocket depth as percent of pin size
+
+// Socket OD's (measured in inches)
+
+// Craftsman 11 piece metric 3/8" drive
+OD_in = [ 0.649, 0.658, 0.655, 0.678, 0.723, 0.775, 0.812, 0.862, 0.926, 0.952, 1.004 ];
+PinD_in = [ 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375 ];
+
+// Convert measurements to mm
+OD_mm = OD_in * 25.4 * Shrinkage;   // Also adjust for shrinkage
+PinD_mm = PinD_in * 25.4;           // Don't oversize the pins
+
+// Compute pocket depth
+Depth = max(PinD_mm) * DepthPCT;
 
 // Compute location of hole n
 function location(n,loc=0) =
@@ -37,38 +44,36 @@ module wedge(x0,y0,z0,x1,y1,z1)
 
 // 
 union() {
-    scale([Shrinkage,Shrinkage,1.00]) {
-        difference() {
-            // Body
-            union() {
-                x0 = location(1);
-                y0 = OD_mm[0]/2 + Oversize + Sidewall;
-                x1 = location(len(OD_mm));
-                y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall;
-                z0 = 0;
-                z1 = Base + Depth;
-                translate([x0,0,0])
-                    cylinder(h=z1,r=y0);
-                translate([x1,0,0])
-                    cylinder(h=z1,r=y1);
-                wedge(x0,y0,z0,x1,y1,z1);
-            }
+    difference() {
+        // Body
+        union() {
+            x0 = location(1);
+            y0 = OD_mm[0]/2 + Oversize + Sidewall;
+            x1 = location(len(OD_mm));
+            y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall;
+            z0 = 0;
+            z1 = Base + Depth;
+            translate([x0,0,0])
+                cylinder(h=z1,r=y0);
+            translate([x1,0,0])
+                cylinder(h=z1,r=y1);
+            wedge(x0,y0,z0,x1,y1,z1);
+        }
+        // Holes
+       union() {
             // Holes
-            union() {
-                // Holes
-                for(i=[1:1:len(OD_mm)]) {
-                    translate([location(i), 0, Base])
-                        cylinder(h=Depth+1,d=OD_mm[i-1] + Oversize);
-                }
-                // Remove webs
-                x0 = location(1);
-                y0 = OD_mm[0]/2 + Oversize + Sidewall - Wedge;
-                x1 = location(len(OD_mm));
-                y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall - Wedge;
-                z0 = Base;
-                z1 = Base + Depth + 1;
-                wedge(x0,y0,z0,x1,y1,z1);
+            for(i=[1:1:len(OD_mm)]) {
+                translate([location(i), 0, Base])
+                    cylinder(h=Depth+1,d=OD_mm[i-1] + Oversize);
             }
+            // Remove webs
+            x0 = location(1);
+            y0 = OD_mm[0]/2 + Oversize + Sidewall - Wedge;
+            x1 = location(len(OD_mm));
+            y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall - Wedge;
+            z0 = Base;
+            z1 = Base + Depth + 1;
+            wedge(x0,y0,z0,x1,y1,z1);
         }
     }
     // Chamfered pins

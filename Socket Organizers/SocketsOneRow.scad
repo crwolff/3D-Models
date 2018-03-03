@@ -25,6 +25,15 @@ function location(n,loc=0) =
         loc :
         location(n-1,loc) + 
             OD_mm[n-2]/2 + Oversize + Gap + Oversize + OD_mm[n-1]/2;
+            
+// Draw a wedge
+module wedge(x0,y0,z0,x1,y1,z1)
+{
+    polyhedron( [[x0,-y0,z0],[x1,-y1,z0],[x1,y1,z0],[x0,y0,z0],
+                 [x0,-y0,z1],[x1,-y1,z1],[x1,y1,z1],[x0,y0,z1]],
+                [[0,1,2,3],[4,5,1,0],[7,6,5,4],
+                 [5,6,2,1],[6,7,3,2],[7,4,0,3]] );
+}
 
 // 
 scale([Shrinkage,Shrinkage,1.00]) {
@@ -41,10 +50,7 @@ scale([Shrinkage,Shrinkage,1.00]) {
                 cylinder(h=z1,r=y0);
             translate([x1,0,0])
                 cylinder(h=z1,r=y1);
-            polyhedron( [[x0,-y0,z0],[x1,-y1,z0],[x1,y1,z0],[x0,y0,z0],
-                         [x0,-y0,z1],[x1,-y1,z1],[x1,y1,z1],[x0,y0,z1]],
-                        [[0,1,2,3],[4,5,1,0],[7,6,5,4],
-                         [5,6,2,1],[6,7,3,2],[7,4,0,3]] );
+            wedge(x0,y0,z0,x1,y1,z1);
         }
         // Holes
         union() {
@@ -60,10 +66,7 @@ scale([Shrinkage,Shrinkage,1.00]) {
             y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall - Wedge;
             z0 = Base;
             z1 = Base + Depth + 1;
-            polyhedron( [[x0,-y0,z0],[x1,-y1,z0],[x1,y1,z0],[x0,y0,z0],
-                         [x0,-y0,z1],[x1,-y1,z1],[x1,y1,z1],[x0,y0,z1]],
-                        [[0,1,2,3],[4,5,1,0],[7,6,5,4],
-                         [5,6,2,1],[6,7,3,2],[7,4,0,3]] );
+            wedge(x0,y0,z0,x1,y1,z1);
         }
     }
     // Chamfered pins

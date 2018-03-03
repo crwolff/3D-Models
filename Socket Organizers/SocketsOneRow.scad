@@ -36,37 +36,39 @@ module wedge(x0,y0,z0,x1,y1,z1)
 }
 
 // 
-scale([Shrinkage,Shrinkage,1.00]) {
-    difference() {
-        // Body
-        union() {
-            x0 = location(1);
-            y0 = OD_mm[0]/2 + Oversize + Sidewall;
-            x1 = location(len(OD_mm));
-            y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall;
-            z0 = 0;
-            z1 = Base + Depth;
-            translate([x0,0,0])
-                cylinder(h=z1,r=y0);
-            translate([x1,0,0])
-                cylinder(h=z1,r=y1);
-            wedge(x0,y0,z0,x1,y1,z1);
-        }
-        // Holes
-        union() {
-            // Holes
-            for(i=[1:1:len(OD_mm)]) {
-                translate([location(i), 0, Base])
-                    cylinder(h=Depth+1,d=OD_mm[i-1] + Oversize);
+union() {
+    scale([Shrinkage,Shrinkage,1.00]) {
+        difference() {
+            // Body
+            union() {
+                x0 = location(1);
+                y0 = OD_mm[0]/2 + Oversize + Sidewall;
+                x1 = location(len(OD_mm));
+                y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall;
+                z0 = 0;
+                z1 = Base + Depth;
+                translate([x0,0,0])
+                    cylinder(h=z1,r=y0);
+                translate([x1,0,0])
+                    cylinder(h=z1,r=y1);
+                wedge(x0,y0,z0,x1,y1,z1);
             }
-            // Remove webs
-            x0 = location(1);
-            y0 = OD_mm[0]/2 + Oversize + Sidewall - Wedge;
-            x1 = location(len(OD_mm));
-            y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall - Wedge;
-            z0 = Base;
-            z1 = Base + Depth + 1;
-            wedge(x0,y0,z0,x1,y1,z1);
+            // Holes
+            union() {
+                // Holes
+                for(i=[1:1:len(OD_mm)]) {
+                    translate([location(i), 0, Base])
+                        cylinder(h=Depth+1,d=OD_mm[i-1] + Oversize);
+                }
+                // Remove webs
+                x0 = location(1);
+                y0 = OD_mm[0]/2 + Oversize + Sidewall - Wedge;
+                x1 = location(len(OD_mm));
+                y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall - Wedge;
+                z0 = Base;
+                z1 = Base + Depth + 1;
+                wedge(x0,y0,z0,x1,y1,z1);
+            }
         }
     }
     // Chamfered pins

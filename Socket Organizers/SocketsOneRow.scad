@@ -4,7 +4,6 @@ $fn = 300;
 //
 
 // Parameters (mm)
-Shrinkage = 1.03;           // Adjust for 3% shrinkage in X/Y
 Oversize = 0.4;             // Extra hole size
 Sidewall = 2;               // Edge of hole to side
 Gap = 0.1;                  // Extra space between sockets
@@ -19,12 +18,16 @@ DepthPCT = 0.70;            // Pocket depth as percent of pin size
 {
     PinD_in = [ 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375 ];
     // Craftsman 11 piece metric 12 point sockets
+    //Shrinkage = 1.03;           // Adjust for 3% shrinkage in X/Y
     //OD_in = [ 0.649, 0.658, 0.655, 0.678, 0.723, 0.775, 0.812, 0.862, 0.926, 0.952, 1.004 ];
     // Craftsman 9 piece metric 6 point sockets
+    //Shrinkage = 1.04;           // Adjust for 4% shrinkage in X/Y
     //OD_in = [ 0.650, 0.655, 0.655, 0.676, 0.723, 0.774, 0.811, 0.916, 1.002 ];
     // Taiwan 9 piece metric
+    Shrinkage = 1.04;           // Adjust for 4% shrinkage in X/Y
     OD_in = [ 0.668, 0.671, 0.668, 0.670, 0.710, 0.788, 0.865, 0.945, 1.025 ];
 }
+
 // Convert measurements to mm
 OD_mm = OD_in * 25.4 * Shrinkage;   // Also adjust for shrinkage
 PinD_mm = PinD_in * 25.4;           // Don't oversize the pins

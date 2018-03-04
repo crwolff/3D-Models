@@ -12,19 +12,20 @@ Wedge = 6;                  // Outer edge to start of wedge
 Chamfer = 1;                // Chamfer on tops of pins
 DepthPCT = 0.70;            // Pocket depth as percent of pin size
 
-// Socket OD's (measured in inches)
-
-// 3/8" drive socket sets
+// 3/8" Socket sets
 {
     PinD_in = [ 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375 ];
-    // Craftsman 11 piece metric 12 point sockets
-    //Shrinkage = 1.03;           // Adjust for 3% shrinkage in X/Y
-    //OD_in = [ 0.649, 0.658, 0.655, 0.678, 0.723, 0.775, 0.812, 0.862, 0.926, 0.952, 1.004 ];
-    // Craftsman 9 piece metric 6 point sockets
-    //Shrinkage = 1.04;           // Adjust for 4% shrinkage in X/Y
-    //OD_in = [ 0.650, 0.655, 0.655, 0.676, 0.723, 0.774, 0.811, 0.916, 1.002 ];
-    // Taiwan 9 piece metric
-    Shrinkage = 1.04;           // Adjust for 4% shrinkage in X/Y
+
+//    name = "Craftsman Metric 12 Point";
+//    Shrinkage = 1.03;
+//    OD_in =  [ 0.649, 0.658, 0.655, 0.678, 0.723, 0.775, 0.812, 0.862, 0.926, 0.952, 1.004 ];
+    
+//    name = "Craftsman Metric 6 Point";
+//    Shrinkage = 1.04;
+//    OD_in = [ 0.650, 0.655, 0.655, 0.676, 0.723, 0.774, 0.811, 0.916, 1.002 ];
+
+    name = "Taiwan Metric 6 Point";
+    Shrinkage = 1.04;
     OD_in = [ 0.668, 0.671, 0.668, 0.670, 0.710, 0.788, 0.865, 0.945, 1.025 ];
 }
 
@@ -83,6 +84,13 @@ union() {
             z0 = Base;
             z1 = Base + Depth + 1;
             wedge(x0,y0,z0,x1,y1,z1);
+        }
+        translate([location(2), 0, -0.1]) {
+            mirror([0,1,0]) {
+                linear_extrude( height=0.6 ) {
+                    text( name, size=8, font="Liberation Sans", $fn=16, valign="center");
+                }
+            }
         }
     }
     // Chamfered pins

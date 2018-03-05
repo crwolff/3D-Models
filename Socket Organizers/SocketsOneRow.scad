@@ -20,13 +20,13 @@ DepthPCT = 0.70;            // Pocket depth as percent of pin size
 //    Shrinkage = 1.03;
 //    OD_in =  [ 0.649, 0.658, 0.655, 0.678, 0.723, 0.775, 0.812, 0.862, 0.926, 0.952, 1.004 ];
     
-//    name = "Craftsman Metric 6 Point";
-//    Shrinkage = 1.04;
-//    OD_in = [ 0.650, 0.655, 0.655, 0.676, 0.723, 0.774, 0.811, 0.916, 1.002 ];
+    name = "Craftsman Metric 6 Point";
+    Shrinkage = 1.04;
+    OD_in = [ 0.650, 0.655, 0.655, 0.676, 0.723, 0.774, 0.811, 0.916, 1.002 ];
 
-    name = "Taiwan Metric 6 Point";
-    Shrinkage = 1.05;
-    OD_in = [ 0.669, 0.671, 0.670, 0.670, 0.710, 0.788, 0.865, 0.945, 1.026 ];
+//    name = "Taiwan Metric 6 Point";
+//    Shrinkage = 1.05;
+//    OD_in = [ 0.669, 0.671, 0.670, 0.670, 0.710, 0.788, 0.865, 0.945, 1.026 ];
 }
 
 // Convert measurements to mm
@@ -47,15 +47,6 @@ function location(n,loc=0) =
 function rowlength( first, last ) =
     (location(last) + OD_mm[last-1]/2) - (location(first) - OD_mm[first-1]/2);
             
-// Draw a wedge
-module wedge(x0,y0,z0,x1,y1,z1)
-{
-    polyhedron( [[x0,-y0,z0],[x1,-y1,z0],[x1,y1,z0],[x0,y0,z0],
-                 [x0,-y0,z1],[x1,-y1,z1],[x1,y1,z1],[x0,y0,z1]],
-                [[0,1,2,3],[4,5,1,0],[7,6,5,4],
-                 [5,6,2,1],[6,7,3,2],[7,4,0,3]] );
-}
-
 // 
 union() {
     difference() {
@@ -67,11 +58,13 @@ union() {
             y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall;
             z0 = 0;
             z1 = Base + Depth;
-            translate([x0,0,0])
-                cylinder(h=z1,r=y0);
-            translate([x1,0,0])
-                cylinder(h=z1,r=y1);
-            wedge(x0,y0,z0,x1,y1,z1);
+            linear_extrude( height=z1 )
+                hull() {
+                    translate([x0,0,0])
+                        circle(r=y0);
+                    translate([x1,0,0])
+                        circle(r=y1);
+                }
         }
         // Holes
        union() {
@@ -87,7 +80,14 @@ union() {
             y1 = OD_mm[len(OD_mm)-1]/2 + Oversize + Sidewall - Wedge;
             z0 = Base;
             z1 = Base + Depth + 1;
-            wedge(x0,y0,z0,x1,y1,z1);
+            translate([0,0,Base])
+                linear_extrude( height = Depth + 1)
+                    hull() {
+                        translate([x0,0,0])
+                            circle(r=y0);
+                        translate([x1,0,0])
+                            circle(r=y1);
+                    }
         }
         translate([rowlength(1,len(OD_mm))/2-OD_mm[0]/2, 0, -0.1])
             mirror([0,1,0])

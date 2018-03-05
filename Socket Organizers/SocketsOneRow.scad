@@ -42,6 +42,10 @@ function location(n,loc=0) =
         loc :
         location(n-1,loc) + 
             OD_mm[n-2]/2 + Oversize + Gap + Oversize + OD_mm[n-1]/2;
+
+// Compute length of a row of sockets
+function rowlength( first, last ) =
+    (location(last) + OD_mm[last-1]/2) - (location(first) - OD_mm[first-1]/2);
             
 // Draw a wedge
 module wedge(x0,y0,z0,x1,y1,z1)
@@ -85,13 +89,10 @@ union() {
             z1 = Base + Depth + 1;
             wedge(x0,y0,z0,x1,y1,z1);
         }
-        translate([location(2), 0, -0.1]) {
-            mirror([0,1,0]) {
-                linear_extrude( height=0.6 ) {
-                    text( name, size=8, font="Liberation Sans", $fn=16, valign="center");
-                }
-            }
-        }
+        translate([rowlength(1,len(OD_mm))/2-OD_mm[0]/2, 0, -0.1])
+            mirror([0,1,0])
+                linear_extrude( height=0.6 )
+                    text( name, size=8, font="Liberation Sans", $fn=16, valign="center", halign="center");
     }
     // Chamfered pins
     union() {

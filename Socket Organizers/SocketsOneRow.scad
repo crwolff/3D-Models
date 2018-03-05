@@ -25,8 +25,8 @@ DepthPCT = 0.70;            // Pocket depth as percent of pin size
 //    OD_in = [ 0.650, 0.655, 0.655, 0.676, 0.723, 0.774, 0.811, 0.916, 1.002 ];
 
     name = "Taiwan Metric 6 Point";
-    Shrinkage = 1.04;
-    OD_in = [ 0.668, 0.671, 0.668, 0.670, 0.710, 0.788, 0.865, 0.945, 1.025 ];
+    Shrinkage = 1.05;
+    OD_in = [ 0.669, 0.671, 0.670, 0.670, 0.710, 0.788, 0.865, 0.945, 1.026 ];
 }
 
 // Convert measurements to mm

@@ -12,6 +12,10 @@ Wedge = 6;                  // Outer edge to start of wedge
 Chamfer = 1;                // Chamfer on tops of pins
 DepthPCT = 0.70;            // Pocket depth as percent of pin size
 
+//
+// Configuration
+//  Uncomment ONE block from the following section
+//
 {
 // 3/8" Socket sets
 //    name = "Craftsman Metric 12 Point";
@@ -30,15 +34,15 @@ DepthPCT = 0.70;            // Pocket depth as percent of pin size
 //    PinD_in = [ 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375, 0.375 ];
 
 // 1/4" Socket sets
-    name = "Craftsman Metric 6 Point";
-    Shrinkage = 1.05;
-    OD_in = [ 0.451, 0.452, 0.452, 0.453, 0.452, 0.500, 0.546, 0.607, 0.673, 0.728 ];
-    PinD_in = [ 0.245, 0.245, 0.245, 0.245, 0.245, 0.245, 0.245, 0.245, 0.245, 0.245 ];
+//    name = "Craftsman Metric 6 Point";
+//    Shrinkage = 1.04;
+//    OD_in = [ 0.451, 0.452, 0.452, 0.453, 0.452, 0.500, 0.546, 0.607, 0.673, 0.728 ];
+//    PinD_in = [ 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250 ];
 
-//    name = "Taiwan Metric 6 Point";
-//    Shrinkage = 1.05;
-//    OD_in = [ 0.474, 0.486, 0.475, 0.475, 0.460, 0.490, 0.494, 0.553, 0.556, 0.671 ];
-//    PinD_in = [ 0.245, 0.245, 0.245, 0.245, 0.245, 0.245, 0.245, 0.245, 0.245, 0.245 ];
+    name = "Taiwan Metric 6 Point";
+    Shrinkage = 1.04;
+    OD_in = [ 0.474, 0.486, 0.475, 0.475, 0.460, 0.490, 0.494, 0.553, 0.556, 0.671 ];
+    PinD_in = [ 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250 ];
 }
 
 // Convert measurements to mm

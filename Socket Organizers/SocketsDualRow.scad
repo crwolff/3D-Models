@@ -8,7 +8,7 @@ Oversize = 0.4;             // Extra hole size
 Sidewall = 2;               // Edge of hole to side
 Gap = 0.1;                  // Extra space between sockets
 Base = 2.5;                 // Base thickness
-Wedge = 6;                  // Outer edge to start of wedge
+Wedge = 5;                  // Outer edge to start of wedge
 Chamfer = 1;                // Chamfer on tops of pins
 DepthPCT = 0.70;            // Pocket depth as percent of pin size
 
@@ -58,14 +58,15 @@ function rowlength( first, last, gap=Gap ) =
 function splitter( n=2, delta=0 ) =
     (rowlength(1,n) < rowlength(n+1,Num)) ? 
         splitter(n+1, rowlength(n+1,Num) - rowlength(1,n) ) :
-        ((rowlength(1,n,1) - rowlength(n+1,Num,2)) < delta) ?
+        ((rowlength(1,n) - rowlength(n+1,Num)) < delta) ?
             n : n-1;
 
 // Extra padding required to make both rows the same length
 Mid = splitter();
 diff = rowlength( 1, Mid ) - rowlength( Mid+1, Num );
-Gap1 = (diff < 0) ? Gap - ( diff / ( Mid - 1 ))         : Gap;
-Gap2 = (diff > 0) ? Gap + ( diff / ( Num - Mid - 1 ))   : Gap;
+//diff = 0;
+Gap1 = (diff <= 0) ? Gap - ( diff / ( Mid - 1 ))         : Gap;
+Gap2 = (diff >= 0) ? Gap + ( diff / ( Num - Mid - 1 ))   : Gap;
 
 // Compute Y location of hole n
 function y_loc( n, row, edge ) =
@@ -121,7 +122,7 @@ union() {
                 // Small webs
                 for(i=[1:Num-1]) {
                     for(j=[i+1:Num]) {
-                        if ( distance( i, (i>Mid)?2:1, j, (j>Mid)?2:1, MaxY ) < 2*Gap ) {
+                        if ( distance( i, (i>Mid)?2:1, j, (j>Mid)?2:1, MaxY ) < 1.0 ) {
                             hull() {
                                 translate([ x_loc(i, (i>Mid)?2:1, (i>Mid)?Gap2:Gap1),
                                             y_loc(i, (i>Mid)?2:1, (i>Mid)?MaxY:0), 0])

@@ -2,14 +2,10 @@ $fn = 300;
 //
 // Single row of sockets
 //
-include <Sockets.scad>
 
 // Configure the set
 Selector = 1;
-Name =      Sets[Selector][Name_Idx];
-Shrinkage = Sets[Selector][Shrinkage_Idx];
-OD_in =     Sets[Selector][OD_in_Idx];
-PinD_in =   Sets[Selector][PinD_in_Idx];
+include <Sockets.scad>
 
 // Parameters (mm)
 Oversize = 0.4;             // Extra hole size

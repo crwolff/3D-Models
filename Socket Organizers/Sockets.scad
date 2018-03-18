@@ -38,8 +38,22 @@ Sets = [
       [ 0.500, 0.500, 0.500, 0.500, 0.500, 0.500, 0.500, 0.500, 0.500, 0.500, 0.500, 0.500 ] ],
 ];
 
-Name =      Sets[Selector][0];
-Shrinkage = Sets[Selector][1];
-OD_in =     Sets[Selector][2];
-PinD_in =   Sets[Selector][3];
+DeepSets = [
+// 1/4" Socket sets
+    [ "Craftsman Metric 6 Point",
+      1.04,
+      2.007, 
+      0.750,
+      [ 0.443, 0.444, 0.492, 0.538, 0.605, 0.678, 0.695, 0.780 ],
+      [ 0.424, 0.444, 0.492, 0.538, 0.605, 0.678, 0.695, 0.780 ],
+      [ 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250, 0.250 ] ],
+];
 
+// Extract set information
+Name =      (Selector < 20) ? Sets[Selector][0] : DeepSets[Selector-20][0];
+Shrinkage = (Selector < 20) ? Sets[Selector][1] : DeepSets[Selector-20][1];
+Len_in =    (Selector < 20) ? 1                 : DeepSets[Selector-20][2]; // Overall length
+Len2_in =   (Selector < 20) ? 1                 : DeepSets[Selector-20][3]; // Length of smaller OD
+OD_in =     (Selector < 20) ? Sets[Selector][2] : DeepSets[Selector-20][4]; // Larger OD
+OD2_in =    (Selector < 20) ? Sets[Selector][2] : DeepSets[Selector-20][5]; // Smaller OD
+PinD_in =   (Selector < 20) ? Sets[Selector][3] : DeepSets[Selector-20][6];

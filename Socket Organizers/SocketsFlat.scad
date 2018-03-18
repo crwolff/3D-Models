@@ -73,7 +73,7 @@ difference() {
         translate([x0 + (x1-x0)/2, y0 + (y1-y0)/2, -0.1])
             mirror([0,1,0])
                 linear_extrude( height=0.6 )
-                    text( Name, size=8, font="Liberation Sans", $fn=16, 
+                    text( Name, size=6, font="Bitstream Vera Sans:style=Bold", $fn=16, 
                             valign="center", halign="center");
 
     }

@@ -28,13 +28,13 @@ function location(n,loc=0) =
     n == 1 ?
         loc :
         location(n-1,loc) + 
-            OD_mm[n-2]/2 + Oversize + Gap + Oversize + OD_mm[n-1]/2;
+            (OD_mm[n-2] + Oversize)/2 + Gap + (OD_mm[n-1] + Oversize)/2;
 
 // Locate corners
-x0 = location(1) - (OD_mm[0]/2 + Oversize) - Sidewall;
-y0 = -( Sidewall + Oversize );
-x1 = location(Num) + OD_mm[Num-1]/2 + Oversize + Sidewall;
-y1 = Len_mm + ( Sidewall + Oversize );
+x0 = location(1) - (OD_mm[0] + Oversize)/2 - Sidewall;
+y0 = -Sidewall;
+x1 = location(Num) + (OD_mm[Num-1] + Oversize)/2 + Sidewall;
+y1 = Len_mm + Sidewall;
 
 // The model
 difference() {
@@ -54,21 +54,21 @@ difference() {
         // Socket Pockets
         for(i=[1:len(OD_mm)]) {
             translate([ location(i), 
-                        -Oversize,
+                        0,
                         max(OD_mm)/2 + Oversize + Base ])
                 rotate([-90,90,0])
-                cylinder(d=OD_mm[i-1] + 2*Oversize,
-                         h=Len_mm - Len2_mm + 2*Oversize);
+                    cylinder(d=OD_mm[i-1] + Oversize,
+                             h=Len_mm - Len2_mm);
             translate([ location(i), 
-                        Len_mm + Oversize,
+                        Len_mm,
                         max(OD_mm)/2 + Oversize + Base ])
                 rotate([90,90,0])
-                cylinder(d=OD2_mm[i-1] + 2*Oversize,
-                         h=Len_mm - Len2_mm + 2*Oversize);
+                    cylinder(d=OD2_mm[i-1] + Oversize,
+                             h=Len_mm - Len2_mm);
         }
         // Remove webs
-        translate([0,-Oversize,max(OD_mm)/2])
-            cube([location(Num)-location(1), Len_mm + 2*Oversize, 2*Base]);
+        translate([0,0,max(OD_mm)/2])
+            cube([location(Num)-location(1), Len_mm, 2*Base]);
         // Label
         translate([x0 + (x1-x0)/2, y0 + (y1-y0)/2, -0.1])
             mirror([0,1,0])

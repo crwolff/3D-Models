@@ -4,7 +4,7 @@ $fn = 300;
 //
 
 // Configure the set
-Selector = 1;
+Selector = 4;
 include <Sockets.scad>
 
 // Parameters (mm)
@@ -79,7 +79,7 @@ union() {
         translate([rowlength(1,len(OD_mm))/2-OD_mm[0]/2, 0, -0.1])
             mirror([0,1,0])
                 linear_extrude( height=0.6 )
-                    text( Name, size=8, font="Liberation Sans", $fn=16, valign="center", halign="center");
+                    text( Name, size=6, font="Bitstream Vera Sans:style=Bold", $fn=16, valign="center", halign="center");
     }
     // Chamfered pins
     union() {

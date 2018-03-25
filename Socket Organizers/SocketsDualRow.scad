@@ -126,7 +126,7 @@ union() {
         translate([rowlength(1,Mid,Gap1)/2, MaxY/2, -0.1])
             mirror([0,1,0])
                 linear_extrude( height=0.6 )
-                    text( Name, size=8, font="Liberation Sans", $fn=16, valign="center", halign="center");
+                    text( Name, size=6, font="Bitstream Vera Sans:style=Bold", $fn=16, valign="center", halign="center");
 
     }
     // Chamfered pins

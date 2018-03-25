@@ -42,10 +42,10 @@ difference() {
     linear_extrude(height = max(OD_mm) / 2 + Base) {
         hull() {
 
-            translate([ x0+0.3, y0+0.3, 0 ]) circle(r=0.3);
-            translate([ x0+0.3, y1-0.3, 0 ]) circle(r=0.3);
-            translate([ x1-0.3, y1-0.3, 0 ]) circle(r=0.3);
-            translate([ x1-0.3, y0+0.3, 0 ]) circle(r=0.3);
+            translate([ x0+0.5, y0+0.5, 0 ]) circle(r=0.5);
+            translate([ x0+0.5, y1-0.5, 0 ]) circle(r=0.5);
+            translate([ x1-0.5, y1-0.5, 0 ]) circle(r=0.5);
+            translate([ x1-0.5, y0+0.5, 0 ]) circle(r=0.5);
         }
         
     }

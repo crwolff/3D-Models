@@ -1,0 +1,5 @@
+Sources for Dremel 395 Mount for MPCNC using Universal Tool-Mount Plate...
+
+Mostly Printed CNC 525 MPCNC "F-25mm OD" (https://www.thingiverse.com/thing:790533)
+Mostly Printed CNC 525 MPCNC "C-23.5mm OD" (https://www.thingiverse.com/thing:724999)
+Universal Tool-Mount Plate for MPCNC (https://www.thingiverse.com/thing:1697287)

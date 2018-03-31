@@ -4,7 +4,7 @@ $fn = 300;
 //
 
 // Configure the set
-Selector = 22;
+Selector = 21;
 include <Sockets.scad>
 
 // Parameters (mm)

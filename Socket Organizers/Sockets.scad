@@ -7,6 +7,11 @@ Sets = [
 //
 // Single Row
 //
+// Square drive
+    [ "Craftsman SAE 8 Point",
+      1.04,
+      [ 0.679, 0.778, 0.859, 0.941, 1.002, 1.027, 1.188, 1.215 ],
+      [ 0.375, 0.375, 0.375, 0.500, 0.500, 0.500, 0.500, 0.500 ] ],
 
 // 1/4" Socket sets
     [ "Craftsman Metric 6 Point",
